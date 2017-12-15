@@ -24,7 +24,7 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(66*WIDTH, 66*HEIGHT), "rprtr258's 2048"); //основное окно программы
     sf::Texture tex_tiles[TILES_COUNT]; //все виды текстур
     int tiles=1; //количество всех тайлов
-    int score=0; //TODO:сделать счет
+    //int score=0; //TODO:сделать счет
     std::ifstream in("save.txt");
     //in << WIDTH << HEIGHT << score;
     in.close();
