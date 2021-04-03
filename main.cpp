@@ -7,6 +7,7 @@ const int TILES_COUNT = 29;
 const int HEIGHT = 10;
 const int WIDTH = 10;
 const int MAX_TILES = HEIGHT * WIDTH;
+const int TILE_SIZE = 66;
 
 
 void generatetile(sf::Sprite *spr_tiles, int (&map)[WIDTH][HEIGHT], int &tiles, sf::Texture empty, sf::Texture &n1) {
@@ -23,7 +24,7 @@ void generatetile(sf::Sprite *spr_tiles, int (&map)[WIDTH][HEIGHT], int &tiles, 
 
 int main() {
     srand(time(0));
-    sf::RenderWindow window(sf::VideoMode(66 * WIDTH, 66 * HEIGHT), "rprtr258's 2048");
+    sf::RenderWindow window(sf::VideoMode(TILE_SIZE * WIDTH, TILE_SIZE * HEIGHT), "rprtr258's 2048");
     sf::Texture tex_tiles[TILES_COUNT];
     int tiles = 1;
     // TODO: specify size from argv
@@ -38,14 +39,14 @@ int main() {
     }
     sf::Sprite spr_tiles[WIDTH][HEIGHT];
     int map[WIDTH][HEIGHT];
-    for (int i = 0; i<HEIGHT; i++) {
-        for (int j = 0; j<WIDTH; j++) {
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
             spr_tiles[j][i].setTexture(tex_tiles[0]);
-            spr_tiles[j][i].setPosition(j * 66, i * 66);
+            spr_tiles[j][i].setPosition(j * TILE_SIZE, i * TILE_SIZE);
             map[j][i] = 0;
         }
     }
-    generatetile((sf::Sprite*)spr_tiles,map, tiles, tex_tiles[0], tex_tiles[1]);
+    generatetile((sf::Sprite*)spr_tiles, map, tiles, tex_tiles[0], tex_tiles[1]);
     while (window.isOpen()) {
         sf::Event Event;
         while (window.pollEvent(Event)) {
@@ -54,15 +55,16 @@ int main() {
                 return 0;
             }
             if (Event.type == sf::Event::KeyPressed) {
+                bool turnmade = false;
                 if (Event.key.code == sf::Keyboard::Up && !press_but) {
                     press_but = true;
-                    bool turnmade = false;
                     for (int i = 0; i < WIDTH; i++) {
                         for (int j = 1; j < HEIGHT; j++) {
                             if (map[i][j] != 0 && map[i][j - 1] == 0) {
-                                int k;
-                                for (k = j - 1; k >= 0 && map[i][k] == 0; k--);
-                                if (map[i][j] != 0 && map[i][k + 1] == 0) {
+                                int k = j - 1;
+                                while (k >= 0 && map[i][k] == 0)
+                                    k--;
+                                if (map[i][k + 1] == 0) {
                                     if (map[i][j] == map[i][k]) {
                                         map[i][k]++;
                                         map[i][j] = 0;
@@ -88,24 +90,16 @@ int main() {
                             }
                         }
                     }
-                    if (turnmade) {
-                        if (tiles < MAX_TILES) {
-                            tiles++;
-                            generatetile((sf::Sprite*)spr_tiles, map, tiles, tex_tiles[0], tex_tiles[1]);
-                        }
-                    } else if (tiles == WIDTH * HEIGHT) {
-                        return 0;
-                    }
                 }
                 if (Event.key.code == sf::Keyboard::Right && !press_but) {
                     press_but = true;
-                    bool turnmade = false;
                     for (int j = 0; j < HEIGHT; j++) {
                         for (int i = WIDTH - 1; i >= 0; i--) {
                             if (map[i][j] != 0 && map[i + 1][j] == 0) {
-                                int k;
-                                for (k = i + 1; k < WIDTH && map[k][j] == 0; k++);
-                                if (map[i][j] != 0 && map[k - 1][j] == 0) {
+                                int k = i + 1;
+                                while (k < WIDTH && map[k][j] == 0)
+                                    k++;
+                                if (map[k - 1][j] == 0) {
                                     if (map[i][j] == map[k][j]) {
                                         map[k][j]++;
                                         map[i][j] = 0;
@@ -115,7 +109,7 @@ int main() {
                                     } else {
                                         spr_tiles[k - 1][j].setTexture(tex_tiles[map[i][j]]);
                                         spr_tiles[i][j].setTexture(tex_tiles[0]);
-                                        std::swap(map[i][j],map[k - 1][j]);
+                                        std::swap(map[i][j], map[k - 1][j]);
                                     }
                                     turnmade = true;
                                 }
@@ -131,24 +125,16 @@ int main() {
                             }
                         }
                     }
-                    if (turnmade) {
-                        if (tiles < MAX_TILES) {
-                            tiles++;
-                            generatetile((sf::Sprite*)spr_tiles, map, tiles, tex_tiles[0], tex_tiles[1]);
-                        }
-                    } else if (tiles == WIDTH * HEIGHT) {
-                        return 0;
-                    }
                 }
                 if (Event.key.code == sf::Keyboard::Left && press_but == false) {
                     press_but = true;
-                    bool turnmade = false;
                     for (int j = 0; j < HEIGHT; j++) {
                         for (int i = 1; i < WIDTH; i++) {
                             if (map[i][j] != 0 && map[i - 1][j] == 0) {
-                                int k;
-                                for (k = i - 1; k >= 0 && map[k][j] == 0;k--);
-                                if (map[i][j] != 0 && map[k + 1][j] == 0) {
+                                int k = i - 1;
+                                while (k >= 0 && map[k][j] == 0)
+                                    k--;
+                                if (map[k + 1][j] == 0) {
                                     if (map[i][j] == map[k][j]) {
                                         map[k][j]++;
                                         map[i][j] = 0;
@@ -158,7 +144,7 @@ int main() {
                                     } else {
                                         spr_tiles[k + 1][j].setTexture(tex_tiles[map[i][j]]);
                                         spr_tiles[i][j].setTexture(tex_tiles[0]);
-                                        std::swap(map[i][j],map[k + 1][j]);
+                                        std::swap(map[i][j], map[k + 1][j]);
                                     }
                                     turnmade = true;
                                 }
@@ -174,24 +160,16 @@ int main() {
                             }
                         }
                     }
-                    if (turnmade) {
-                        if (tiles < MAX_TILES) {
-                            tiles++;
-                            generatetile((sf::Sprite*)spr_tiles, map, tiles, tex_tiles[0], tex_tiles[1]);
-                        }
-                    } else if (tiles == WIDTH * HEIGHT) {
-                        return 0;
-                    }
                 }
                 if (Event.key.code == sf::Keyboard::Down && press_but == false) {
                     press_but=true;
-                    bool turnmade = false;
                     for (int i = 0; i < WIDTH;i++) {
                         for (int j = HEIGHT - 2; j >= 0; j--) {
                             if (map[i][j] != 0 && map[i][j + 1] == 0) {
-                                int k;
-                                for (k = j + 1; k < HEIGHT && map[i][k] == 0; k++);
-                                if (map[i][j] != 0 && map[i][k - 1] == 0) {
+                                int k = j + 1;
+                                while (k < HEIGHT && map[i][k] == 0)
+                                    k++;
+                                if (map[i][k - 1] == 0) {
                                     if (k != HEIGHT && map[i][j] == map[i][k]) {
                                         map[i][k]++;
                                         map[i][j] = 0;
@@ -201,7 +179,7 @@ int main() {
                                     } else {
                                         spr_tiles[i][k - 1].setTexture(tex_tiles[map[i][j]]);
                                         spr_tiles[i][j].setTexture(tex_tiles[0]);
-                                        std::swap(map[i][j],map[i][k - 1]);
+                                        std::swap(map[i][j], map[i][k - 1]);
                                     }
                                     turnmade = true;
                                 }
@@ -217,6 +195,11 @@ int main() {
                             }
                         }
                     }
+                }
+                if (Event.key.code == sf::Keyboard::Up ||
+                    Event.key.code == sf::Keyboard::Right ||
+                    Event.key.code == sf::Keyboard::Left ||
+                    Event.key.code == sf::Keyboard::Down) {
                     if (turnmade) {
                         if (tiles < MAX_TILES) {
                             tiles++;
