@@ -29,8 +29,8 @@ tasks.withType(LinkExecutable::class.java).configureEach {
 tasks.register<Copy>("assemble-release") {
     dependsOn("build")
 
-    from("../img")
-    into("$buildDir/exe/main/debug/img")
+    from("resources")
+    into("$buildDir/exe/main/debug")
 }
 
 tasks.register<Zip>("release") {
