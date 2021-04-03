@@ -78,15 +78,13 @@ int main() {
                                     }
                                     turnmade = true;
                                 }
-                            } else if (map[i][j] != 0) {
-                                if (map[i][j] == map[i][j - 1]) {
-                                    map[i][j - 1]++;
-                                    map[i][j] = 0;
-                                    tiles--;
-                                    spr_tiles[i][j].setTexture(tex_tiles[0]);
-                                    spr_tiles[i][j - 1].setTexture(tex_tiles[map[i][j - 1]]);
-                                    turnmade = true;
-                                }
+                            } else if (map[i][j] != 0 && map[i][j] == map[i][j - 1]) {
+                                map[i][j - 1]++;
+                                map[i][j] = 0;
+                                tiles--;
+                                spr_tiles[i][j].setTexture(tex_tiles[0]);
+                                spr_tiles[i][j - 1].setTexture(tex_tiles[map[i][j - 1]]);
+                                turnmade = true;
                             }
                         }
                     }
@@ -113,15 +111,13 @@ int main() {
                                     }
                                     turnmade = true;
                                 }
-                            } else if (map[i][j] != 0) {
-                                if (map[i][j] == map[i + 1][j]) {
-                                    map[i + 1][j]++;
-                                    map[i][j] = 0;
-                                    tiles--;
-                                    spr_tiles[i][j].setTexture(tex_tiles[0]);
-                                    spr_tiles[i + 1][j].setTexture(tex_tiles[map[i + 1][j]]);
-                                    turnmade = true;
-                                }
+                            } else if (map[i][j] != 0 && map[i][j] == map[i + 1][j]) {
+                                map[i + 1][j]++;
+                                map[i][j] = 0;
+                                tiles--;
+                                spr_tiles[i][j].setTexture(tex_tiles[0]);
+                                spr_tiles[i + 1][j].setTexture(tex_tiles[map[i + 1][j]]);
+                                turnmade = true;
                             }
                         }
                     }
@@ -148,21 +144,19 @@ int main() {
                                     }
                                     turnmade = true;
                                 }
-                            } else if (map[i][j]!=0) {
-                                if (map[i][j] == map[i - 1][j]) {
-                                    map[i - 1][j]++;
-                                    map[i][j] = 0;
-                                    tiles--;
-                                    spr_tiles[i][j].setTexture(tex_tiles[0]);
-                                    spr_tiles[i - 1][j].setTexture(tex_tiles[map[i - 1][j]]);
-                                    turnmade = true;
-                                }
+                            } else if (map[i][j] != 0 && map[i][j] == map[i - 1][j]) {
+                                map[i - 1][j]++;
+                                map[i][j] = 0;
+                                tiles--;
+                                spr_tiles[i][j].setTexture(tex_tiles[0]);
+                                spr_tiles[i - 1][j].setTexture(tex_tiles[map[i - 1][j]]);
+                                turnmade = true;
                             }
                         }
                     }
                 }
-                if (Event.key.code == sf::Keyboard::Down && press_but == false) {
-                    press_but=true;
+                if (Event.key.code == sf::Keyboard::Down && !press_but) {
+                    press_but = true;
                     for (int i = 0; i < WIDTH;i++) {
                         for (int j = HEIGHT - 2; j >= 0; j--) {
                             if (map[i][j] != 0 && map[i][j + 1] == 0) {
@@ -183,15 +177,13 @@ int main() {
                                     }
                                     turnmade = true;
                                 }
-                            } else if (map[i][j] != 0) {
-                                if (map[i][j] == map[i][j + 1]) {
-                                    map[i][j + 1]++;
-                                    map[i][j] = 0;
-                                    tiles--;
-                                    spr_tiles[i][j].setTexture(tex_tiles[0]);
-                                    spr_tiles[i][j + 1].setTexture(tex_tiles[map[i][j + 1]]);
-                                    turnmade = true;
-                                }
+                            } else if (map[i][j] != 0 && map[i][j] == map[i][j + 1]) {
+                                map[i][j + 1]++;
+                                map[i][j] = 0;
+                                tiles--;
+                                spr_tiles[i][j].setTexture(tex_tiles[0]);
+                                spr_tiles[i][j + 1].setTexture(tex_tiles[map[i][j + 1]]);
+                                turnmade = true;
                             }
                         }
                     }
