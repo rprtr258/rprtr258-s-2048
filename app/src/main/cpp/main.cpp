@@ -1,3 +1,4 @@
+#include <iostream>
 #include <sstream>
 #include <time.h>
 #include <SFML/Graphics.hpp>
@@ -22,7 +23,13 @@ void generatetile(sf::Sprite *spr_tiles, int (&map)[WIDTH][HEIGHT], int &tiles, 
     map[x][y] = 1;
 }
 
-int main() {
+std::string get_cwd(char **argv) {
+    std::string exe_path = std::string(argv[0]);
+    int index = exe_path.find_last_of('\\');
+    return exe_path.substr(0, index);
+}
+
+int main(int argc, char **argv) {
     srand(time(0));
     sf::RenderWindow window(sf::VideoMode(TILE_SIZE * WIDTH, TILE_SIZE * HEIGHT), "rprtr258's 2048");
     sf::Texture tex_tiles[TILES_COUNT];
@@ -30,9 +37,10 @@ int main() {
     // TODO: specify size from argv
     //in << WIDTH << HEIGHT;
     bool press_but = false;
+    std::string cwd = get_cwd(argv);
     for (int i = 0; i < TILES_COUNT; i++) {
         std::ostringstream str;
-        str << "img\\" << i << ".png";
+        str << cwd << "\\img\\" << i << ".png";
         if (!tex_tiles[i].loadFromFile(str.str())) {
             return 1;
         }
