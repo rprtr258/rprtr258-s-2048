@@ -3,9 +3,11 @@
 #include <sstream>
 #include <time.h>
 #include <SFML/Graphics.hpp>
+
 const int TILES_COUNT=29;
 const int HEIGHT=10;
 const int WIDTH=10;
+
 void generatetile(sf::Sprite *spr_tiles,int (&map)[WIDTH][HEIGHT],int &tiles,sf::Texture empty,sf::Texture &n1) {
     if(tiles==HEIGHT*WIDTH) {
         return;
@@ -20,16 +22,16 @@ void generatetile(sf::Sprite *spr_tiles,int (&map)[WIDTH][HEIGHT],int &tiles,sf:
     map[x][y]=1;
 }
 int main() {
-    srand(time(0)); //иниализация рандома
-    sf::RenderWindow window(sf::VideoMode(66*WIDTH, 66*HEIGHT), "rprtr258's 2048"); //основное окно программы
-    sf::Texture tex_tiles[TILES_COUNT]; //все виды текстур
-    int tiles=1; //количество всех тайлов
-    //int score=0; //TODO:сделать счет
+    srand(time(0)); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    sf::RenderWindow window(sf::VideoMode(66*WIDTH, 66*HEIGHT), "rprtr258's 2048"); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    sf::Texture tex_tiles[TILES_COUNT]; //пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    int tiles=1; //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+    //int score=0; //TODO:пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     std::ifstream in("save.txt");
     //in << WIDTH << HEIGHT << score;
     in.close();
     bool press_but=false;
-    for(int i=0;i<TILES_COUNT;i++) { //чтение и установка текстур
+    for(int i=0;i<TILES_COUNT;i++) { //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         std::ostringstream str;
         str << "img\\" << i << ".png";
         if (!tex_tiles[i].loadFromFile(str.str())) {
@@ -57,11 +59,11 @@ int main() {
                 if (Event.key.code==sf::Keyboard::Up && press_but==false) {
                     press_but=true;
                     bool turnmade=false;
-                    for(int i=0;i<WIDTH;i++) { //перебор х
-                        for(int j=1;j<HEIGHT;j++) { //перебор у
+                    for(int i=0;i<WIDTH;i++) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
+                        for(int j=1;j<HEIGHT;j++) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
                             if(map[i][j]!=0 && map[i][j-1]==0) {
                                 int k;
-                                for(k=j-1;k>=0 && map[i][k]==0;k--); //перебор по y вверх
+                                for(k=j-1;k>=0 && map[i][k]==0;k--); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ y пїЅпїЅпїЅпїЅпїЅ
                                 if(map[i][j]!=0 && map[i][k+1]==0) {
                                     if(map[i][j]==map[i][k]) {
                                         map[i][k]++;
@@ -93,7 +95,7 @@ int main() {
                             tiles++;
                             generatetile((sf::Sprite*)spr_tiles,map,tiles,tex_tiles[0],tex_tiles[1]);
                         }
-                        //TODO:сделать конец игры
+                        //TODO:пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
                     } else if(tiles==WIDTH*HEIGHT) {
                         return 0;
                     }
@@ -101,11 +103,11 @@ int main() {
                 if (Event.key.code==sf::Keyboard::Right && press_but==false) {
                     press_but=true;
                     bool turnmade=false;
-                    for(int j=0;j<HEIGHT;j++) { //перебор y
-                        for(int i=WIDTH-1;i>=0;i--) { //перебор x
+                    for(int j=0;j<HEIGHT;j++) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ y
+                        for(int i=WIDTH-1;i>=0;i--) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ x
                             if(map[i][j]!=0 && map[i+1][j]==0) {
                                 int k;
-                                for(k=i+1;k<WIDTH && map[k][j]==0;k++); //перебор по x вправо
+                                for(k=i+1;k<WIDTH && map[k][j]==0;k++); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ x пїЅпїЅпїЅпїЅпїЅпїЅ
                                 if(map[i][j]!=0 && map[k-1][j]==0) {
                                     if(map[i][j]==map[k][j]) {
                                         map[k][j]++;
@@ -144,11 +146,11 @@ int main() {
                 if (Event.key.code==sf::Keyboard::Left && press_but==false) {
                     press_but=true;
                     bool turnmade=false;
-                    for(int j=0;j<HEIGHT;j++) { //перебор y
-                        for(int i=1;i<WIDTH;i++) { //перебор x
+                    for(int j=0;j<HEIGHT;j++) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ y
+                        for(int i=1;i<WIDTH;i++) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ x
                             if(map[i][j]!=0 && map[i-1][j]==0) {
                                 int k;
-                                for(k=i-1;k>=0 && map[k][j]==0;k--); //перебор по x вправо
+                                for(k=i-1;k>=0 && map[k][j]==0;k--); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ x пїЅпїЅпїЅпїЅпїЅпїЅ
                                 if(map[i][j]!=0 && map[k+1][j]==0) {
                                     if(map[i][j]==map[k][j]) {
                                         map[k][j]++;
@@ -187,11 +189,11 @@ int main() {
                 if (Event.key.code==sf::Keyboard::Down && press_but==false) {
                     press_but=true;
                     bool turnmade=false;
-                    for(int i=0;i<WIDTH;i++) { //перебор х
-                        for(int j=HEIGHT-2;j>=0;j--) { //перебор у
+                    for(int i=0;i<WIDTH;i++) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
+                        for(int j=HEIGHT-2;j>=0;j--) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
                             if(map[i][j]!=0 && map[i][j+1]==0) {
                                 int k;
-                                for(k=j+1;k<HEIGHT && map[i][k]==0;k++); //перебор по y вниз
+                                for(k=j+1;k<HEIGHT && map[i][k]==0;k++); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ y пїЅпїЅпїЅпїЅ
                                 if(map[i][j]!=0 && map[i][k-1]==0) {
                                     if(k!=HEIGHT && map[i][j]==map[i][k]) {
                                         map[i][k]++;
@@ -228,8 +230,8 @@ int main() {
                     }
                 }
                 if (Event.key.code==sf::Keyboard::Space) {
-                    for(int i=0;i<WIDTH;i++) { //перебор х
-                        for(int j=0;j<HEIGHT;j++) { //перебор у
+                    for(int i=0;i<WIDTH;i++) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
+                        for(int j=0;j<HEIGHT;j++) { //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ
                             if(map[i][j]==0) {
                                 map[i][j]=1;
                                 spr_tiles[i][j].setTexture(tex_tiles[1]);
